@@ -1,3 +1,6 @@
-<app-sidebar></app-sidebar>
 
-<app-footer></app-footer>
+    <app-navbar (newItemEvent)="addItem()" class="header-custom"></app-navbar>
+    <app-sidebar [open]="open" class="container-custom"></app-sidebar>
+    <app-footer class="footer-custom"></app-footer>
+
+

@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
+  open : boolean = true;
   constructor() { }
+
+  addItem() {
+    this.open = (this.open = !this.open)
+    console.log(this.open)
+  }
 
   ngOnInit() {
   }
