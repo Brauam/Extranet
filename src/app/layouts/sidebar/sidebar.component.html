@@ -1,6 +1,10 @@
-<mat-sidenav-container>
-    <mat-sidenav  #sidenav [fixedInViewport]="true" [fixedBottomGap]="0" [fixedTopGap]="0" [opened]="open" mode="side">Start</mat-sidenav>
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
+<mat-sidenav-container class="container-sidebar">
+    <mat-sidenav class="sidenav"
+        [ngStyle]="{'width.px': open ? '200' : '50'}"
+        [fixedInViewport]="true"
+        [fixedBottomGap]="0"
+        [fixedTopGap]="0"
+        opened
+        mode="side">
+    </mat-sidenav>
 </mat-sidenav-container>

@@ -1,6 +1,13 @@
+<ng-container class="wrapper">
 
-    <app-navbar (newItemEvent)="addItem()" class="header-custom"></app-navbar>
+    <app-navbar [ngStyle]="{'left.px': open ? '200': '50'}" (newItemEvent)="addItem()" class="header-custom">
+    </app-navbar>
     <app-sidebar [open]="open" class="container-custom"></app-sidebar>
-    <app-footer class="footer-custom"></app-footer>
+
+    <div class="main-content" [ngStyle]="{'left.px': open ? '200': '50'}">
+        <router-outlet></router-outlet>
+        <app-footer [ngStyle]="{'left.px': open ? '200': '50'}" class="footer-custom"></app-footer>
+    </div>
 
 
+</ng-container>
