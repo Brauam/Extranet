@@ -6,11 +6,12 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { AppMaterialModule } from '../app-material.module';
 import { MainComponent } from './main/main.component';
 import { RouterModule } from '@angular/router';
+import { AppCommonModule } from '../app-common.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    AppMaterialModule,
+    AppCommonModule,
     RouterModule
   ],
   declarations: [

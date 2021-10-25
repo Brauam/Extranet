@@ -8,8 +8,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
-  @Input() open : boolean;
-
 
   ngOnInit() {
   }

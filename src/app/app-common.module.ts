@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppMaterialModule } from "./app-material.module";
 
@@ -6,7 +7,8 @@ import { AppMaterialModule } from "./app-material.module";
     exports: [
         AppMaterialModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FlexLayoutModule
     ],
     
 })
