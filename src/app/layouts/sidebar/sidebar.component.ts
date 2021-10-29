@@ -5,38 +5,11 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 
 interface FoodNode {
   name: string;
-  icon:string;
-  routa:string;
+  icon: string;
+  ruta?: string;
   children?: FoodNode[];
 }
 
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Devoluciones',
-    icon: 'phone',
-    routa: 'devoluciones/solicitudes',
-    children: [
-      {name: 'Solicitudes',icon:'phone',routa:''},
-      
-    ]
-  }, {
-    name: 'Home',
-    icon: 'phone',
-    routa: 'home',
-    children: [
-      {
-        name: 'Green',icon:'phone',routa:'',
-        children: [
-          
-        ]
-      }, {
-        name: 'Orange',icon:'phone',routa:'',
-        children: [
-        ]
-      },
-    ]
-  },
-];
 
 @Component({
   selector: 'app-sidebar',
@@ -45,21 +18,40 @@ const TREE_DATA: FoodNode[] = [
 })
 export class SidebarComponent implements OnInit {
 
-  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FoodNode>();
-  @Input() open : boolean = false;
+  panelOpenState = false;
+  model: FoodNode[] = [
+    {
+      name: 'Devoluciones de Mercaderia',
+      icon: 'summarize',
+      children: [
+        { name: 'Solicitudes', icon: 'assignment', ruta: '/devoluciones/solicitudes' },
+        { name: 'Segundo', icon: 'assignment', ruta: '/devoluciones/solicitudes' },  
+      ]
+    },
+    {
+      name: 'Devolucideria',
+      icon: 'summarize',
+      children: [
+        { name: 'Solicitudes', icon: 'assignment', ruta: '/devoluciones/solicitudes' },
+        { name: 'Segundo', icon: 'assignment', ruta: '/devoluciones/solicitudes' },  
+      ]
+    },
+    {
+      name: 'Devolucione Mercaderia',
+      icon: 'summarize',
+      children: [
+        { name: 'Solicitudes', icon: 'assignment', ruta: '/devoluciones/solicitudes' },
+        { name: 'Segundo', icon: 'assignment', ruta: '/devoluciones/solicitudes' },  
+      ]
+    }
+  ];
+
+  @Input() open: boolean = false;
   constructor() {
-    this.dataSource.data = TREE_DATA;
   }
-
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
-
 
   ngOnInit() {
   }
 
-
-    
-  
 
 }

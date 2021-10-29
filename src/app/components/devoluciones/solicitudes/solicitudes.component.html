@@ -1,54 +1,20 @@
-
-<mat-card class="mat-elevation-z8">
-  <mat-card-header>
-    <mat-card-title>Solicitud de devoluciones</mat-card-title>
-    <mat-card-subtitle >Lista de solicitudes </mat-card-subtitle>
-    <span fxLayoutAlign="flex-end"></span>
-    <button mat-fab routerLink="/devoluciones/solicitudesdetalle/0" color="primary">
+<mat-card>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <mat-card-title>
+      Solicitudes de devoluciones
+    </mat-card-title>
+    <button mat-fab color="primary">
       <mat-icon>add</mat-icon>
     </button>
-  </mat-card-header>
+  </div>
+  <mat-card-subtitle>
+    Lista de solicitudes
+  </mat-card-subtitle>
+  <div fxLayoutAlign="flex-end">
+    
+  </div>
+
   <mat-card-content>
-    <div class="mat-elevation-z1">
-      <table mat-table [dataSource]="dataSource">
-
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> Id </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Motivo </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-
-        <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-          <th mat-header-cell *matHeaderCellDef> Documento </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="symbol">
-          <th mat-header-cell *matHeaderCellDef> Estado </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="sssymbol">
-          <th mat-header-cell *matHeaderCellDef> Fecha </th>
-          <td mat-cell *matCellDef="let element"> {{element.sssymbol}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-
-      <mat-paginator [pageSizeOptions]="[10,15,20]"
-        showFirstLastButtons
-        aria-label="Select page of periodic elements">
-      </mat-paginator>
-    </div>
+    <p>This card indeterminates progress bar.</p>
   </mat-card-content>
 </mat-card>
