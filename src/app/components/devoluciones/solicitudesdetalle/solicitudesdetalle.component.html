@@ -7,11 +7,11 @@
     <mat-horizontal-stepper [linear]="true" #stepper>
       <mat-step [stepControl]="validarComprobanteFormGroup">
         <form [formGroup]="validarComprobanteFormGroup">
-          <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
-            <div fxLayout="column" fxFlex="75">
-              <ng-template matStepLabel>Validar comprobante electronico</ng-template>
+          <ng-template matStepLabel>Validar comprobante electronico</ng-template>
+          <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayout.xs="column" fxFlexFill>
+            <div fxLayout="column" fxFlex="40">
               <div fxLayout="row" fxLayout.xs="column">
-                <div fxLayout="column" fxFlex="50" >
+                <div fxFlex="50" fxLayoutAlign="space-evenly center">
                   <mat-form-field>
                     <mat-label>Serie Comprobante</mat-label>
                     <mat-select formControlName="seriecomprobante">
@@ -19,29 +19,35 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div fxLayout="column" fxFlex="50" >
+                <div fxFlex="50" fxLayoutAlign="space-evenly center">
                   <mat-form-field>
                     <mat-label>Numero Comprobante</mat-label>
                     <input matInput placeholder="Numero Comprobante" formControlName="numerocomprobante" required>
                   </mat-form-field>
                 </div>
               </div>
-              <mat-form-field>
-                <mat-label>Serie Guia</mat-label>
-                <mat-select formControlName="serieguia">
-                  <mat-option value="one">First option</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Numero Guia</mat-label>
-                <input matInput placeholder="Numero Guia" formControlName="numeroguia" required>
-              </mat-form-field>
+              <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="50" fxLayoutAlign="space-evenly center">
+                  <mat-form-field>
+                    <mat-label>Serie Guia</mat-label>
+                    <mat-select formControlName="serieguia">
+                      <mat-option value="one">First option</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50" fxLayoutAlign="space-evenly center">
+                  <mat-form-field>
+                    <mat-label>Numero Guia</mat-label>
+                    <input matInput placeholder="Numero Guia" formControlName="numeroguia" required>
+                  </mat-form-field>
+                </div>
+              </div>
             </div>
-            <div fxLayout="column" fxFlex="25" fxLayoutAlign="center center">
+            <div fxLayout="column" fxFlex="60" fxLayoutAlign="center center">
               <img src="assets/img/factura.png" width="185px" height="180px">
             </div>
           </div>
-          <div fxLayout="column" fxLayoutAlign="center end">
+          <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center end">
             <button mat-button matStepperNext>Validar
               <mat-icon>navigate_next</mat-icon>
             </button>

@@ -25,23 +25,7 @@ export class SidebarComponent implements OnInit {
       icon: 'summarize',
       children: [
         { name: 'Solicitudes', icon: 'assignment', ruta: '/devoluciones/solicitudes' },
-        { name: 'Segundo', icon: 'assignment', ruta: '/devoluciones/solicitudes' },  
-      ]
-    },
-    {
-      name: 'Devolucideria',
-      icon: 'summarize',
-      children: [
-        { name: 'Solicitudes', icon: 'assignment', ruta: '/devoluciones/solicitudes' },
-        { name: 'Segundo', icon: 'assignment', ruta: '/devoluciones/solicitudes' },  
-      ]
-    },
-    {
-      name: 'Devolucione Mercaderia',
-      icon: 'summarize',
-      children: [
-        { name: 'Solicitudes', icon: 'assignment', ruta: '/devoluciones/solicitudes' },
-        { name: 'Segundo', icon: 'assignment', ruta: '/devoluciones/solicitudes' },  
+        { name: 'Segundo', icon: 'assignment', ruta: '/devoluciones/solicitudes' },
       ]
     }
   ];
