@@ -4,51 +4,53 @@
     <mat-card-subtitle>Formulario de solicitudes </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <mat-horizontal-stepper [linear]="true" #stepper>
-      <mat-step [stepControl]="validarComprobanteFormGroup">
+    <mat-horizontal-stepper [linear]="true" #stepper labelPosition="end">
+      <mat-step [stepControl]="validarComprobanteFormGroup"> 
         <form [formGroup]="validarComprobanteFormGroup">
           <ng-template matStepLabel>Validar comprobante electronico</ng-template>
           <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayout.xs="column" fxFlexFill>
             <div fxLayout="column" fxFlex="40">
               <div fxLayout="row" fxLayout.xs="column">
                 <div fxFlex="50" fxLayoutAlign="space-evenly center">
-                  <mat-form-field>
+                  <mat-form-field >
                     <mat-label>Serie Comprobante</mat-label>
-                    <mat-select formControlName="seriecomprobante">
-                      <mat-option value="one">First option</mat-option>
+                    <mat-select formControlName="seriecomprobante" required>
+                      <mat-option *ngFor="let item of series" [value]="item">{{item}}</mat-option>
                     </mat-select>
+                    <mat-error [id]="item.tipo" *ngFor="let item of erroresValidacion.errores">
+                      <div *ngIf="validarComprobanteFormGroup.get('seriecomprobante')?.hasError(item.tipo) && validarComprobanteFormGroup.get('seriecomprobante')?.dirty">
+                        {{item.mensaje}}
+                      </div>
+                    </mat-error>
                   </mat-form-field>
                 </div>
                 <div fxFlex="50" fxLayoutAlign="space-evenly center">
                   <mat-form-field>
                     <mat-label>Numero Comprobante</mat-label>
-                    <input matInput placeholder="Numero Comprobante" formControlName="numerocomprobante" required>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div fxLayout="row" fxLayout.xs="column">
-                <div fxFlex="50" fxLayoutAlign="space-evenly center">
-                  <mat-form-field>
-                    <mat-label>Serie Guia</mat-label>
-                    <mat-select formControlName="serieguia">
-                      <mat-option value="one">First option</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div fxFlex="50" fxLayoutAlign="space-evenly center">
-                  <mat-form-field>
-                    <mat-label>Numero Guia</mat-label>
-                    <input matInput placeholder="Numero Guia" formControlName="numeroguia" required>
+                    <input matInput placeholder="Numero Comprobante" pattern="[0-9]*" min="1" formControlName="numerocomprobante" required maxlength="10">
+                    <mat-error [id]="item.tipo" *ngFor="let item of erroresValidacion.errores">
+                      <div *ngIf="validarComprobanteFormGroup.get('numerocomprobante')?.hasError(item.tipo) && validarComprobanteFormGroup.get('numerocomprobante')?.dirty">
+                        {{item.mensaje}}
+                      </div>
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
             </div>
-            <div fxLayout="column" fxFlex="60" fxLayoutAlign="center center">
+            <br>
+            <div fxLayout="column" fxFlex="20" fxLayoutAlign="center center">
+              <button mat-button [disabled]="!validarComprobanteFormGroup.valid" (click)="validarComprobante()">Validar
+                <mat-icon>check</mat-icon>
+              </button>
+            </div>
+            <div fxLayout="column" fxFlex="40" fxLayoutAlign="center center">
               <img src="assets/img/factura.png" width="185px" height="180px">
             </div>
+            
           </div>
+          <br>
           <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center end">
-            <button mat-button matStepperNext>Validar
+            <button mat-button [disabled]="resValidacion.Success == false" matStepperNext>Siguiente
               <mat-icon>navigate_next</mat-icon>
             </button>
           </div>
