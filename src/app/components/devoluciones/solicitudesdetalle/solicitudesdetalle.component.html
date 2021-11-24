@@ -4,66 +4,117 @@
     <mat-card-subtitle>Formulario de solicitudes </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <mat-horizontal-stepper [linear]="true" #stepper labelPosition="end">
-      <mat-step [stepControl]="validarComprobanteFormGroup"> 
-        <form [formGroup]="validarComprobanteFormGroup">
-          <ng-template matStepLabel>Validar comprobante electronico</ng-template>
-          <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayout.xs="column" fxFlexFill>
-            <div fxLayout="column" fxFlex="40">
-              <div fxLayout="row" fxLayout.xs="column">
-                <div fxFlex="50" fxLayoutAlign="space-evenly center">
-                  <mat-form-field >
-                    <mat-label>Serie Comprobante</mat-label>
-                    <mat-select formControlName="seriecomprobante" required>
-                      <mat-option *ngFor="let item of series" [value]="item">{{item}}</mat-option>
-                    </mat-select>
-                    <mat-error [id]="item.tipo" *ngFor="let item of erroresValidacion.errores">
-                      <div *ngIf="validarComprobanteFormGroup.get('seriecomprobante')?.hasError(item.tipo) && validarComprobanteFormGroup.get('seriecomprobante')?.dirty">
-                        {{item.mensaje}}
-                      </div>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div fxFlex="50" fxLayoutAlign="space-evenly center">
-                  <mat-form-field>
-                    <mat-label>Numero Comprobante</mat-label>
-                    <input matInput placeholder="Numero Comprobante" pattern="[0-9]*" min="1" formControlName="numerocomprobante" required maxlength="10">
-                    <mat-error [id]="item.tipo" *ngFor="let item of erroresValidacion.errores">
-                      <div *ngIf="validarComprobanteFormGroup.get('numerocomprobante')?.hasError(item.tipo) && validarComprobanteFormGroup.get('numerocomprobante')?.dirty">
-                        {{item.mensaje}}
-                      </div>
-                    </mat-error>
-                  </mat-form-field>
+    <mat-horizontal-stepper [linear]="false" #stepper labelPosition="end">
+      <mat-step [stepControl]="validarComprobanteFormGroup">
+        <mat-card>
+          <mat-card-title>Datos del comprobante</mat-card-title>
+          <form [formGroup]="validarComprobanteFormGroup">
+            <ng-template matStepLabel>Validar comprobante electronico</ng-template>
+            <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayout.xs="column" fxFlexFill>
+              <div fxLayout="column" fxFlex="40">
+                <div fxLayout="row" fxLayout.xs="column">
+                  <div fxFlex="50" fxLayoutAlign="space-evenly center">
+                    <mat-form-field>
+                      <mat-label>Serie Comprobante</mat-label>
+                      <mat-select formControlName="seriecomprobante" required>
+                        <mat-option *ngFor="let item of series" [value]="item">{{item}}</mat-option>
+                      </mat-select>
+                      <mat-error [id]="item.tipo" *ngFor="let item of erroresValidacion.errores">
+                        <div
+                          *ngIf="validarComprobanteFormGroup.get('seriecomprobante')?.hasError(item.tipo) && validarComprobanteFormGroup.get('seriecomprobante')?.dirty">
+                          {{item.mensaje}}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex="50" fxLayoutAlign="space-evenly center">
+                    <mat-form-field>
+                      <mat-label>Numero Comprobante</mat-label>
+                      <input matInput placeholder="Numero Comprobante" pattern="[0-9]*" min="1"
+                        formControlName="numerocomprobante" maxlength="10" required>
+                      <mat-error [id]="item.tipo" *ngFor="let item of erroresValidacion.errores">
+                        <div
+                          *ngIf="validarComprobanteFormGroup.get('numerocomprobante')?.hasError(item.tipo) && validarComprobanteFormGroup.get('numerocomprobante')?.dirty">
+                          {{item.mensaje}}
+                        </div>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
                 </div>
               </div>
+              <br>
+              <div fxLayout="column" fxFlex="20" fxLayoutAlign="center center">
+                <button mat-button [disabled]="!validarComprobanteFormGroup.valid"
+                  (click)="validarComprobante()">Validar
+                  <mat-icon>check</mat-icon>
+                </button>
+              </div>
+              <div fxLayout="column" fxFlex="40" fxLayoutAlign="center center">
+                <img src="assets/img/factura.png" width="185px" height="180px">
+              </div>
+
             </div>
             <br>
-            <div fxLayout="column" fxFlex="20" fxLayoutAlign="center center">
-              <button mat-button [disabled]="!validarComprobanteFormGroup.valid" (click)="validarComprobante()">Validar
-                <mat-icon>check</mat-icon>
+            <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center end">
+              <button mat-button [disabled]="!resValidacion.Success" matStepperNext>Siguiente
+                <mat-icon>navigate_next</mat-icon>
               </button>
             </div>
-            <div fxLayout="column" fxFlex="40" fxLayoutAlign="center center">
-              <img src="assets/img/factura.png" width="185px" height="180px">
-            </div>
-            
-          </div>
-          <br>
-          <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center end">
-            <button mat-button [disabled]="resValidacion.Success == false" matStepperNext>Siguiente
-              <mat-icon>navigate_next</mat-icon>
-            </button>
-          </div>
-        </form>
+          </form>
+        </mat-card>
       </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>You are now done.</p>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
-        </div>
+
+      <mat-step [stepControl]="SolicitudesFormGroup">
+        <mat-card>
+          <mat-card-title>Solicitud de devolucion de mercaderia</mat-card-title>
+          <ng-template matStepLabel>Llenar solicitud</ng-template>
+          <form [formGroup]="SolicitudesFormGroup">
+            <span>Nombre de la empresa: <strong>{{comprobantes?.razon}}</strong></span>
+            <mat-card-subtitle>Solicitud de devolucion de mercaderia</mat-card-subtitle>
+            <mat-table [dataSource]="comprobantesdetalle">
+              <!-- Position Column -->
+              <div fxLayout="row"  fxLayout.xs="column">
+                <ng-container matColumnDef="secuencia">
+                  <mat-header-cell fxFlex="10" *matHeaderCellDef> N° </mat-header-cell>
+                  <mat-cell fxFlex="10" *matCellDef="let element"> {{element?.secuencia}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="descripcion">
+                  <mat-header-cell fxFlex="60" *matHeaderCellDef> Descripcion </mat-header-cell>
+                  <mat-cell fxFlex="60" *matCellDef="let element"> {{element?.descripcion}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="modelo">
+                  <mat-header-cell fxFlex="10" *matHeaderCellDef> Marca </mat-header-cell>
+                  <mat-cell fxFlex="10" *matCellDef="let element"> {{element?.modelo}} </mat-cell>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="cantidad">
+                  <mat-header-cell fxFlex="10" *matHeaderCellDef> Cantidad </mat-header-cell>
+                  <mat-cell fxFlex="10" *matCellDef="let element"> {{element?.cantidad}} </mat-cell>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="medida">
+                  <mat-header-cell fxFlex="10" *matHeaderCellDef> Und. Medida </mat-header-cell>
+                  <mat-cell fxFlex="10" *matCellDef="let element"> {{element?.medida}} </mat-cell>
+                </ng-container>
+              </div>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            </mat-table>
+          </form>
+
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-card>
       </mat-step>
+
     </mat-horizontal-stepper>
   </mat-card-content>
 </mat-card>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { empty } from 'rxjs';
-import { IComprobantes } from 'src/app/models/intranet/comprobantes';
+import { IComprobantes, IComprobantesDetalle } from 'src/app/models/intranet/comprobantes';
 import { IReturn } from 'src/app/services/common/return';
 import { ComprobantesService } from 'src/app/services/intranet/comprobantes.service';
 
@@ -20,12 +20,14 @@ export class SolicitudesdetalleComponent implements OnInit {
   }
 
   comprobantes: IComprobantes;
+  comprobantesdetalle: IComprobantesDetalle[] = [];
   series: string[];
   resValidacion: IReturn;
   validarComprobanteFormGroup: FormGroup;
   SolicitudesFormGroup: FormGroup;
   SolicitudesdetalleFormGroup: FormGroup;
 
+  displayedColumns: string[] = [ 'secuencia','descripcion', 'modelo' ,'cantidad', 'medida'  ];
 
   constructor(private _formBuilder: FormBuilder,
     private comprobantesService: ComprobantesService) { }
@@ -50,8 +52,10 @@ export class SolicitudesdetalleComponent implements OnInit {
 
           this.comprobantesService.get(+res.Code).subscribe(
             result => {
-              this.comprobantes = result,
-                console.log(this.comprobantes)
+              this.comprobantes = result;
+              this.comprobantesdetalle = result.items;
+              this.comprobantesdetalle.sort()
+              console.log(this.comprobantes)
             }
           )
         } else {
@@ -63,25 +67,41 @@ export class SolicitudesdetalleComponent implements OnInit {
 
   crearValidarComprobanteFormGroup() {
     this.validarComprobanteFormGroup = this._formBuilder.group({
-      seriecomprobante: new FormControl(),
-      numerocomprobante: new FormControl(),
+      seriecomprobante: new FormControl('', Validators.required),
+      numerocomprobante: new FormControl('', Validators.compose([Validators.pattern('[0-9]*'), Validators.required, Validators.min(1)])),
     })
   }
 
   crearSolicitudesFormGroup() {
     this.SolicitudesFormGroup = this._formBuilder.group({
-      seriecomprobante: new FormControl('', Validators.required),
-      numerocomprobante: new FormControl('', Validators.compose([Validators.pattern('[0-9]*'), Validators.required, Validators.min(1)])),
+      idsolicitud: new FormControl(''),
+      idcliente: new FormControl(''),
+      numerooperacion: new FormControl(''),
+      nombresolicitante: new FormControl(''),
+      fechasolicitud: new FormControl(''),
+      ordencompra: new FormControl(''),
+      fechaordencompra: new FormControl(''),
+      motivo: new FormControl(''),
+      fecha_registro: new FormControl(''),
+      fecha_modificacion: new FormControl(''),
+      activo: new FormControl(''),
+      pagado: new FormControl(''),
+      pendientepago: new FormControl(''),
+      items: this._formBuilder.array([],Validators.required),
     })
   }
 
 
   crearSolicitudesDetalleFormGroup() {
     this.SolicitudesdetalleFormGroup = this._formBuilder.group({
-      seriecomprobante: new FormControl(''),
-      numerocomprobante: new FormControl(''),
-      serieguia: new FormControl(''),
-      numeroguia: new FormControl(''),
+      iddetallesolicitud: new FormControl(''),
+      idsolicitud: new FormControl(''),
+      secuencia: new FormControl(''),
+      descripcionarticulo: new FormControl(''),
+      idmodelo: new FormControl(''),
+      idunidadmedida: new FormControl(''),
+      cantidad: new FormControl(''),
+      activo: new FormControl(''),
     })
   }
 
