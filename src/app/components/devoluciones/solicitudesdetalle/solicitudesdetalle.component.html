@@ -65,54 +65,115 @@
       </mat-step>
 
       <mat-step [stepControl]="SolicitudesFormGroup">
-        <mat-card>
-          <mat-card-title>Solicitud de devolucion de mercaderia</mat-card-title>
-          <ng-template matStepLabel>Llenar solicitud</ng-template>
-          <form [formGroup]="SolicitudesFormGroup">
-            <span>Nombre de la empresa: <strong>{{comprobantes?.razon}}</strong></span>
-            <mat-card-subtitle>Solicitud de devolucion de mercaderia</mat-card-subtitle>
+        <mat-card-title>{{comprobantes?.razon}}</mat-card-title>
+        <ng-template matStepLabel>Solicitud de devolucion de mercaderia</ng-template>
+        <br>
+        <form [formGroup]="SolicitudesFormGroup">
+          <div fxLayout="row" fxLayoutAlign="space-between" fxlayout.xs="column">
+
+            <div fxLayout="column" fxLayoutAlign="space-between" fxFlexFill>
+              <div fxLayout="row" fxLayoutAlign="space-between" fxlayout.xs="column" fxlayout.md="column">
+                <mat-form-field appearance="fill" fxFlex="65">
+                  <mat-label>Nombre de solicitante</mat-label>
+                  <input matInput>
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex="34">
+                  <mat-label>Fecha de solicitud</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between" fxlayout.xs="column">
+                <div fxLayout="column" fxLayoutAlign="none" fxFlex="60">
+                  <div fxLayout="row" fxLayoutAlign="space-between" fxlayout.xs="column">
+                    <mat-form-field appearance="fill" fxFlex="100">
+                      <mat-label>Numero de OC</mat-label>
+                      <input matInput>
+                    </mat-form-field>
+                  </div>
+                  <div fxLayout="row" fxLayoutAlign="space-between">
+                    <mat-form-field appearance="fill" fxFlex="100">
+                      <mat-label>Fecha de OC</mat-label>
+                      <input matInput>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div fxLayout="column" fxFlex="39">
+                  <div fxLayout="row" fxLayoutAlign="space-between">
+
+                    <mat-form-field appearance="fill" fxFlex="100">
+                      <mat-label>Motivo de devolucion</mat-label>
+                      <textarea matInput></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+
+          <mat-card-subtitle>Solicitud de devolucion de mercaderia</mat-card-subtitle>
+          <form action="">
             <mat-table [dataSource]="comprobantesdetalle">
               <!-- Position Column -->
-              <div fxLayout="row"  fxLayout.xs="column">
-                <ng-container matColumnDef="secuencia">
-                  <mat-header-cell fxFlex="10" *matHeaderCellDef> N° </mat-header-cell>
-                  <mat-cell fxFlex="10" *matCellDef="let element"> {{element?.secuencia}} </mat-cell>
-                </ng-container>
+              <!-- <ng-container matColumnDef="secuencia">
+                  <mat-header-cell  *matHeaderCellDef> N° </mat-header-cell>
+                  <mat-cell  *matCellDef="let element"> {{element?.secuencia}} </mat-cell>
+                </ng-container> -->
 
-                <ng-container matColumnDef="descripcion">
-                  <mat-header-cell fxFlex="60" *matHeaderCellDef> Descripcion </mat-header-cell>
-                  <mat-cell fxFlex="60" *matCellDef="let element"> {{element?.descripcion}} </mat-cell>
-                </ng-container>
+              <ng-container matColumnDef="descripcion">
+                <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="descripcion"> {{element?.descripcion}} </mat-cell>
+              </ng-container>
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="modelo">
-                  <mat-header-cell fxFlex="10" *matHeaderCellDef> Marca </mat-header-cell>
-                  <mat-cell fxFlex="10" *matCellDef="let element"> {{element?.modelo}} </mat-cell>
-                </ng-container>
+              <!-- Name Column -->
+              <ng-container matColumnDef="modelo">
+                <mat-header-cell *matHeaderCellDef> Marca </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="modelo"> {{element?.modelo}} </mat-cell>
+              </ng-container>
 
-                <!-- Weight Column -->
-                <ng-container matColumnDef="cantidad">
-                  <mat-header-cell fxFlex="10" *matHeaderCellDef> Cantidad </mat-header-cell>
-                  <mat-cell fxFlex="10" *matCellDef="let element"> {{element?.cantidad}} </mat-cell>
-                </ng-container>
+              <!-- Weight Column -->
+              <ng-container matColumnDef="cantidadtotal">
+                <mat-header-cell *matHeaderCellDef> Cantidad Total </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="cantidad total">
+                  {{element?.cantidad}}
+                </mat-cell>
+              </ng-container>
 
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="medida">
-                  <mat-header-cell fxFlex="10" *matHeaderCellDef> Und. Medida </mat-header-cell>
-                  <mat-cell fxFlex="10" *matCellDef="let element"> {{element?.medida}} </mat-cell>
-                </ng-container>
-              </div>
+              <!-- Weight Column -->
+              <ng-container matColumnDef="cantidad">
+                <mat-header-cell *matHeaderCellDef> Cantidad a devolver </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="cantidad">
+                  <!-- {{element?.cantidad}}  -->
+                  <mat-form-field>
+                    <!-- <mat-label>Input</mat-label> -->
+                    <input matInput [value]="element?.cantidad">
+                  </mat-form-field>
+                </mat-cell>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="medida">
+                <mat-header-cell *matHeaderCellDef> Und. Medida </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="medida"> {{element?.medida}} </mat-cell>
+              </ng-container>
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
             </mat-table>
           </form>
-
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
-          </div>
-        </mat-card>
+        </form>
+        <br>
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end">
+          <button mat-button (click)="stepper.reset()">
+            <mat-icon>restart_alt</mat-icon>Resetear
+          </button>
+          <button mat-button matStepperNext>Finalizar<mat-icon>navigate_next</mat-icon></button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Fin Solicitud</ng-template>
       </mat-step>
 
     </mat-horizontal-stepper>

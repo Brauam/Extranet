@@ -1,20 +1,10 @@
 
-// .example-form {
-//   min-width: 150px;
-//   max-width: 500px;
-//   width: 100%;
-// }
 
 mat-form-field {
-  min-width: 100px;
-  max-width: 180px;
+  min-width: 200px;
+  max-width: 250px;
   width: 100%;
 }
-
-mat-table {
-  width: 100%;
-}
-
 
 
 @media screen and (max-width: 960px) {
@@ -26,10 +16,10 @@ mat-table {
   .mat-table caption {
     font-size: 1em;
   }
-
-  /*  Enable this to hide header
+  
+    // Enable this to hide header
   .mat-table .mat-header-cell {
-
+    
     border: 10px solid;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -38,7 +28,7 @@ mat-table {
     position: absolute;
     width: 1px;
   }
-  */
+  
   .mat-table .mat-row {
     border-bottom: 5px solid #ddd;
     display: block;
@@ -48,6 +38,8 @@ mat-table {
   .mat-table .mat-row:nth-child(odd) {background: #FFF}
   */
   .mat-table .mat-cell {
+    padding-left: 0px;
+    padding-right: 0px;
     border-bottom: 1px solid #ddd;
     display: block;
     font-size: 1em;
@@ -61,11 +53,12 @@ mat-table {
     * aria-label has no advantage, it won't be read inside a table
     content: attr(aria-label);
     */
+    // content: attr(aria-label);
     content: attr(data-label);
     float: left;
     text-transform: uppercase;
     font-weight: normal;
-
+    
     font-size: .85em;
   }
   .mat-table .mat-cell:last-child {

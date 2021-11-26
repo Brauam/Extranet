@@ -27,7 +27,7 @@ export class SolicitudesdetalleComponent implements OnInit {
   SolicitudesFormGroup: FormGroup;
   SolicitudesdetalleFormGroup: FormGroup;
 
-  displayedColumns: string[] = [ 'secuencia','descripcion', 'modelo' ,'cantidad', 'medida'  ];
+  displayedColumns: string[] = [ 'descripcion', 'modelo' , 'cantidadtotal', 'medida' , 'cantidad' ];
 
   constructor(private _formBuilder: FormBuilder,
     private comprobantesService: ComprobantesService) { }
