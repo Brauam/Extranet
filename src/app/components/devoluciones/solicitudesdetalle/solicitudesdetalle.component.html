@@ -39,8 +39,7 @@
             </div>
             <br>
             <div fxLayout="column" fxFlex="20" fxLayoutAlign="center center">
-              <button mat-button [disabled]="!validarComprobanteFormGroup.valid"
-                (click)="validarComprobante()">Validar
+              <button mat-button [disabled]="!validarComprobanteFormGroup.valid" (click)="validarComprobante()">Validar
                 <mat-icon>check</mat-icon>
               </button>
             </div>
@@ -93,7 +92,7 @@
                     </mat-form-field>
                   </div>
                   <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.xs="column">
-                    <mat-form-field appearance="fill" fxFlex="50">
+                    <mat-form-field appearance="fill" fxFlex="100">
                       <mat-label>Motivo de devolucion</mat-label>
                       <mat-select required formControlName="idmotivo">
                         <mat-option *ngFor="let item of motivos" [value]="item.idtipo">{{item.tipo}}</mat-option>
@@ -120,22 +119,25 @@
 
         <mat-card-subtitle>Solicitud de devolucion de mercaderia</mat-card-subtitle>
         <div class="example-table-container">
-          <form action="">
-            <mat-table [dataSource]="comprobantesdetalle" fxLayout="column" fxFlexFill> 
+          <form>
+
+            <mat-table [dataSource]="SolicitudesFormGroup.value.items" fxLayout="column" fxFlexFill>
+
 
               <ng-container matColumnDef="descripcion">
                 <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
-                <mat-cell *matCellDef="let element" data-label="descripcion"> {{element?.descripcion}} </mat-cell>
+                <mat-cell *matCellDef="let element" data-label="descripcion">
+                  {{element?.descripcionarticulo}} </mat-cell>
               </ng-container>
 
               <!-- Name Column -->
-              <ng-container matColumnDef="modelo" >
+              <ng-container matColumnDef="modelo">
                 <mat-header-cell *matHeaderCellDef> Marca </mat-header-cell>
                 <mat-cell *matCellDef="let element" data-label="modelo"> {{element?.modelo}} </mat-cell>
               </ng-container>
 
               <!-- Weight Column -->
-              <ng-container matColumnDef="cantidadtotal" >
+              <ng-container matColumnDef="cantidadtotal">
                 <mat-header-cell *matHeaderCellDef> Cantidad Total </mat-header-cell>
                 <mat-cell *matCellDef="let element" data-label="cantidad total">
                   {{element?.cantidad}}
@@ -143,7 +145,7 @@
               </ng-container>
 
               <!-- Weight Column -->
-              <ng-container matColumnDef="cantidad" >
+              <ng-container matColumnDef="cantidad">
                 <mat-header-cell *matHeaderCellDef> Cantidad a devolver </mat-header-cell>
                 <mat-cell *matCellDef="let element" data-label="cantidad a devolver">
                   <!-- {{element?.cantidad}}  -->
@@ -153,7 +155,7 @@
                 </mat-cell>
               </ng-container>
               <!-- Symbol Column -->
-              <ng-container matColumnDef="medida" >
+              <ng-container matColumnDef="medida">
                 <mat-header-cell *matHeaderCellDef> Und. Medida </mat-header-cell>
                 <mat-cell *matCellDef="let element" data-label="medida"> {{element?.medida}} </mat-cell>
               </ng-container>
@@ -161,9 +163,9 @@
               <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
             </mat-table>
-            {{SolicitudesFormGroup.value|json}}
-
           </form>
+
+          {{SolicitudesFormGroup.value|json}}
         </div>
 
         <br>

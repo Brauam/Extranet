@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { empty } from 'rxjs';
 import { IComprobantes, IComprobantesDetalle, IMotivosNC } from 'src/app/models/intranet/comprobantes';
 import { IReturn } from 'src/app/services/common/return';
@@ -29,7 +29,7 @@ export class SolicitudesdetalleComponent implements OnInit {
   SolicitudesFormGroup: FormGroup;
   SolicitudesdetalleFormGroup: FormGroup;
 
-  displayedColumns: string[] = [ 'descripcion', 'modelo' , 'cantidadtotal', 'medida' , 'cantidad' ];
+  displayedColumns: string[] = ['descripcion', 'modelo', 'cantidadtotal', 'medida', 'cantidad'];
 
   constructor(private _formBuilder: FormBuilder,
     private comprobantesService: ComprobantesService) { }
@@ -40,13 +40,13 @@ export class SolicitudesdetalleComponent implements OnInit {
     this.comprobantesService.SeriesComprobantes().subscribe(res => this.series = res)
     this.crearValidarComprobanteFormGroup();
     this.crearSolicitudesFormGroup();
-    this.crearSolicitudesDetalleFormGroup();
     this.comprobantesService.MotivosNC().subscribe(res => this.motivos = res)
   }
 
   validarComprobante() {
     let serie = this.validarComprobanteFormGroup.controls.seriecomprobante.value;
     let numero = this.validarComprobanteFormGroup.controls.numerocomprobante.value;
+
     this.comprobantesService.ObtenerNumeroOperacion(serie, numero).subscribe(
       res => {
         this.resValidacion = res;
@@ -57,16 +57,32 @@ export class SolicitudesdetalleComponent implements OnInit {
             result => {
               this.comprobantes = result;
               this.comprobantesdetalle = result.items;
-              this.comprobantesdetalle.sort()
-              this.SolicitudesFormGroup.patchValue(result)
+
               this.SolicitudesFormGroup.patchValue({
-                idcliente : result.idcliente,
-                idvendedor : result.idvendedor,
-                ordencompra : result.pedido
+                idcliente: result.idcliente,
+                idvendedor: result.idvendedor,
+                ordencompra: result.pedido
               })
 
+
+              this.comprobantesdetalle.forEach(element => {
+                this.crearSolicitudesDetalleFormGroup();
+                this.SolicitudesdetalleFormGroup.patchValue({
+                  secuencia: element.secuencia,
+                  codigo: element.codigo,
+                  modelo: element.modelo,
+                  descripcionarticulo: element.descripcion,
+                  idmodelo : element.idmodelo,
+                  idunidadmedida: element.idunidadmedida,
+                  cantidad: element.cantidad,
+                  medida: element.medida
+                });
+                const detalle = this.SolicitudesFormGroup.get('items') as FormArray;
+                detalle.push(this.SolicitudesdetalleFormGroup);
+
+              });
+
               console.log(this.SolicitudesFormGroup.value)
-              console.log(this.comprobantes)
             }
           )
         } else {
@@ -99,7 +115,7 @@ export class SolicitudesdetalleComponent implements OnInit {
       activo: new FormControl(true),
       idmotivo: new FormControl(1),
       pendientepago: new FormControl(false),
-      items: this._formBuilder.array([],Validators.required),
+      items: this._formBuilder.array([], Validators.required),
     })
   }
 
@@ -109,11 +125,15 @@ export class SolicitudesdetalleComponent implements OnInit {
       iddetallesolicitud: new FormControl(''),
       idsolicitud: new FormControl(''),
       secuencia: new FormControl(''),
+      codigo: new FormControl(''),
       descripcionarticulo: new FormControl(''),
+      medida: new FormControl(''),
+      modelo: new FormControl(0),
       idmodelo: new FormControl(''),
       idunidadmedida: new FormControl(''),
       cantidad: new FormControl(''),
-      activo: new FormControl(''),
+      cantidad_devolucion: new FormControl(''),
+      activo: new FormControl(true),
     })
   }
 

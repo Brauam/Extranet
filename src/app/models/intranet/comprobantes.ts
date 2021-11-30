@@ -4,6 +4,7 @@ export interface IComprobantesDetalle{
     fecha: Date;
     codigo: string;
     cantidad: number;
+    idunidadmedida: number;
     idmodelo: number;
     unidad: string;
     modelo: string;
