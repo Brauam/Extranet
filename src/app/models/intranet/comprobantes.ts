@@ -47,3 +47,9 @@ export interface IComprobantes {
     descuento:number;
     items:IComprobantesDetalle[];
 }
+
+
+export interface IMotivosNC {
+    idtipo:number;
+    tipo:string;
+}

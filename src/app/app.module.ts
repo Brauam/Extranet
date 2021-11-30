@@ -1,5 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +23,9 @@ import { LayoutsAppModule } from './layouts/layouts-app.module';
     BrowserAnimationsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [{
+    provide: MAT_DATE_LOCALE, useValue:'es-PE'
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

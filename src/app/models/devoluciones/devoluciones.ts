@@ -1,6 +1,8 @@
 export interface ISolicitudes {
   idsolicitud: number;
   idcliente: number;
+  idmotivo: number;
+  idvendedor: number;
   numerooperacion: number;
   nombresolicitante: string;
   fechasolicitud: Date;
@@ -10,7 +12,6 @@ export interface ISolicitudes {
   fecha_registro: Date;
   fecha_modificacion: Date;
   activo: boolean;
-  pagado: boolean;
   pendientepago: boolean;
   Items: ISolicitudesDetalle[];
 }

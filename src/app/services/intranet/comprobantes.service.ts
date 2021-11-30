@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IComprobantes } from 'src/app/models/intranet/comprobantes';
+import { IComprobantes, IMotivosNC } from 'src/app/models/intranet/comprobantes';
 import { environment } from 'src/environments/environment';
 import { IReturn } from '../common/return';
 
@@ -23,5 +23,10 @@ export class ComprobantesService {
   SeriesComprobantes() {
     return this.http.get<string[]>(this.uri+`SeriesComprobantes`)
   }
+
+  MotivosNC() {
+    return this.http.get<IMotivosNC[]>(this.uri+`MotivosNC`)
+  }
+
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { empty } from 'rxjs';
-import { IComprobantes, IComprobantesDetalle } from 'src/app/models/intranet/comprobantes';
+import { IComprobantes, IComprobantesDetalle, IMotivosNC } from 'src/app/models/intranet/comprobantes';
 import { IReturn } from 'src/app/services/common/return';
 import { ComprobantesService } from 'src/app/services/intranet/comprobantes.service';
 
@@ -19,9 +19,11 @@ export class SolicitudesdetalleComponent implements OnInit {
     ]
   }
 
+  today = new Date();
   comprobantes: IComprobantes;
   comprobantesdetalle: IComprobantesDetalle[] = [];
   series: string[];
+  motivos: IMotivosNC[];
   resValidacion: IReturn;
   validarComprobanteFormGroup: FormGroup;
   SolicitudesFormGroup: FormGroup;
@@ -33,12 +35,13 @@ export class SolicitudesdetalleComponent implements OnInit {
     private comprobantesService: ComprobantesService) { }
 
   ngOnInit() {
+    console.log(this.today);
     this.resValidacion = <IReturn>{};
     this.comprobantesService.SeriesComprobantes().subscribe(res => this.series = res)
     this.crearValidarComprobanteFormGroup();
     this.crearSolicitudesFormGroup();
     this.crearSolicitudesDetalleFormGroup();
-
+    this.comprobantesService.MotivosNC().subscribe(res => this.motivos = res)
   }
 
   validarComprobante() {
@@ -55,6 +58,14 @@ export class SolicitudesdetalleComponent implements OnInit {
               this.comprobantes = result;
               this.comprobantesdetalle = result.items;
               this.comprobantesdetalle.sort()
+              this.SolicitudesFormGroup.patchValue(result)
+              this.SolicitudesFormGroup.patchValue({
+                idcliente : result.idcliente,
+                idvendedor : result.idvendedor,
+                ordencompra : result.pedido
+              })
+
+              console.log(this.SolicitudesFormGroup.value)
               console.log(this.comprobantes)
             }
           )
@@ -74,19 +85,20 @@ export class SolicitudesdetalleComponent implements OnInit {
 
   crearSolicitudesFormGroup() {
     this.SolicitudesFormGroup = this._formBuilder.group({
-      idsolicitud: new FormControl(''),
-      idcliente: new FormControl(''),
+      idsolicitud: new FormControl(0),
+      idcliente: new FormControl(0),
+      idvendedor: new FormControl(0),
       numerooperacion: new FormControl(''),
       nombresolicitante: new FormControl(''),
-      fechasolicitud: new FormControl(''),
+      fechasolicitud: new FormControl(this.today),
       ordencompra: new FormControl(''),
       fechaordencompra: new FormControl(''),
       motivo: new FormControl(''),
       fecha_registro: new FormControl(''),
       fecha_modificacion: new FormControl(''),
-      activo: new FormControl(''),
-      pagado: new FormControl(''),
-      pendientepago: new FormControl(''),
+      activo: new FormControl(true),
+      idmotivo: new FormControl(1),
+      pendientepago: new FormControl(false),
       items: this._formBuilder.array([],Validators.required),
     })
   }
