@@ -150,8 +150,12 @@
                 <mat-cell *matCellDef="let element;let i = index" data-label="cantidad a devolver">
                   <!-- {{element?.cantidad}}  -->
                   <mat-form-field appearance="fill" class="campoeditor">
-                    <input (keyup)="SaveCantidad(i,$event)" #cantidaddev  matInput [value]="element?.cantidad_devolucion" >
+                    <input #cantidaddev (keyup)="SaveCantidad(i,cantidaddev.value)" [id]="i" matInput [value]="element?.cantidad_devolucion">
+
                   </mat-form-field>
+                  <button mat-icon-button (click)="SaveCantidad(i,cantidaddev.value)">
+                    <mat-icon>done</mat-icon>
+                  </button>
                 </mat-cell>
               </ng-container>
               <!-- Symbol Column -->
@@ -170,7 +174,7 @@
 
         <br>
         <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end">
-          <button mat-button (click)="stepper.reset()">
+          <button mat-button (click)="resetear()">
             <mat-icon>restart_alt</mat-icon>Resetear
           </button>
           <button mat-button matStepperNext>Finalizar<mat-icon>navigate_next</mat-icon></button>

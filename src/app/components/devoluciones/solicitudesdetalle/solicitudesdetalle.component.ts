@@ -1,5 +1,7 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatHorizontalStepper } from '@angular/material/stepper';
 import { IComprobantes, IComprobantesDetalle, IMotivosNC } from 'src/app/models/intranet/comprobantes';
 import { IReturn } from 'src/app/services/common/return';
 import { ComprobantesService } from 'src/app/services/intranet/comprobantes.service';
@@ -19,6 +21,7 @@ export class SolicitudesdetalleComponent implements OnInit {
   }
 
   @ViewChild('cantidaddev') cantidaddev: ElementRef;
+  @ViewChild('stepper') stepper: MatHorizontalStepper;
 
   today = new Date();
   comprobantes: IComprobantes;
@@ -29,8 +32,8 @@ export class SolicitudesdetalleComponent implements OnInit {
   validarComprobanteFormGroup: FormGroup;
   SolicitudesFormGroup: FormGroup;
   SolicitudesdetalleFormGroup: FormGroup;
-  rowIndex:number;
-  cantidaddevolucion:number;
+  rowIndex: number;
+  cantidaddevolucion: number;
 
   displayedColumns: string[] = ['descripcion', 'modelo', 'cantidadtotal', 'medida', 'cantidad'];
 
@@ -46,6 +49,11 @@ export class SolicitudesdetalleComponent implements OnInit {
     this.comprobantesService.MotivosNC().subscribe(res => this.motivos = res)
   }
 
+  resetear(){
+    this.crearSolicitudesFormGroup();
+    this.resValidacion = <IReturn>{};
+    this.stepper.reset();
+  }
   validarComprobante() {
     let serie = this.validarComprobanteFormGroup.controls.seriecomprobante.value;
     let numero = this.validarComprobanteFormGroup.controls.numerocomprobante.value;
@@ -76,7 +84,7 @@ export class SolicitudesdetalleComponent implements OnInit {
                   codigo: element.codigo,
                   modelo: element.modelo,
                   descripcionarticulo: element.descripcion,
-                  idmodelo : element.idmodelo,
+                  idmodelo: element.idmodelo,
                   idunidadmedida: element.idunidadmedida,
                   cantidad: element.cantidad,
                   cantidad_devolucion: element.cantidad,
@@ -96,11 +104,12 @@ export class SolicitudesdetalleComponent implements OnInit {
     )
   }
 
-  SaveCantidad(index:number,event:any){
-    this.rowIndex = index;
-    let valor = event.target.value;
-    (this.SolicitudesFormGroup.controls.items as FormArray).at(index).patchValue({ cantidad_devolucion: +valor });
-    this.cantidaddev.nativeElement.focus();
+  SaveCantidad(index: number, valor: any) {
+    // (this.SolicitudesFormGroup.controls.items as FormArray).at(index).patchValue({ cantidad_devolucion: +valor });
+    // console.log((this.SolicitudesFormGroup.controls.items as FormArray).at(index).value);
+    (this.SolicitudesFormGroup.controls.items as FormArray).at(index).get('cantidad_devolucion')?.setValue(+valor);
+    document.getElementById(index.toString())?.focus();
+    // console.log((this.SolicitudesFormGroup.controls.items as FormArray).at(index).value);
   }
 
   crearValidarComprobanteFormGroup() {
