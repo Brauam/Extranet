@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { empty } from 'rxjs';
 import { IComprobantes, IComprobantesDetalle, IMotivosNC } from 'src/app/models/intranet/comprobantes';
 import { IReturn } from 'src/app/services/common/return';
 import { ComprobantesService } from 'src/app/services/intranet/comprobantes.service';
@@ -19,6 +18,8 @@ export class SolicitudesdetalleComponent implements OnInit {
     ]
   }
 
+  @ViewChild('cantidaddev') cantidaddev: ElementRef;
+
   today = new Date();
   comprobantes: IComprobantes;
   comprobantesdetalle: IComprobantesDetalle[] = [];
@@ -28,6 +29,8 @@ export class SolicitudesdetalleComponent implements OnInit {
   validarComprobanteFormGroup: FormGroup;
   SolicitudesFormGroup: FormGroup;
   SolicitudesdetalleFormGroup: FormGroup;
+  rowIndex:number;
+  cantidaddevolucion:number;
 
   displayedColumns: string[] = ['descripcion', 'modelo', 'cantidadtotal', 'medida', 'cantidad'];
 
@@ -57,6 +60,7 @@ export class SolicitudesdetalleComponent implements OnInit {
             result => {
               this.comprobantes = result;
               this.comprobantesdetalle = result.items;
+              console.log(result);
 
               this.SolicitudesFormGroup.patchValue({
                 idcliente: result.idcliente,
@@ -75,6 +79,7 @@ export class SolicitudesdetalleComponent implements OnInit {
                   idmodelo : element.idmodelo,
                   idunidadmedida: element.idunidadmedida,
                   cantidad: element.cantidad,
+                  cantidad_devolucion: element.cantidad,
                   medida: element.medida
                 });
                 const detalle = this.SolicitudesFormGroup.get('items') as FormArray;
@@ -82,7 +87,6 @@ export class SolicitudesdetalleComponent implements OnInit {
 
               });
 
-              console.log(this.SolicitudesFormGroup.value)
             }
           )
         } else {
@@ -90,6 +94,13 @@ export class SolicitudesdetalleComponent implements OnInit {
         }
       }
     )
+  }
+
+  SaveCantidad(index:number,event:any){
+    this.rowIndex = index;
+    let valor = event.target.value;
+    (this.SolicitudesFormGroup.controls.items as FormArray).at(index).patchValue({ cantidad_devolucion: +valor });
+    this.cantidaddev.nativeElement.focus();
   }
 
   crearValidarComprobanteFormGroup() {
@@ -122,17 +133,17 @@ export class SolicitudesdetalleComponent implements OnInit {
 
   crearSolicitudesDetalleFormGroup() {
     this.SolicitudesdetalleFormGroup = this._formBuilder.group({
-      iddetallesolicitud: new FormControl(''),
-      idsolicitud: new FormControl(''),
-      secuencia: new FormControl(''),
+      iddetallesolicitud: new FormControl(0),
+      idsolicitud: new FormControl(0),
+      secuencia: new FormControl(0),
       codigo: new FormControl(''),
       descripcionarticulo: new FormControl(''),
       medida: new FormControl(''),
       modelo: new FormControl(0),
       idmodelo: new FormControl(''),
-      idunidadmedida: new FormControl(''),
+      idunidadmedida: new FormControl(0),
       cantidad: new FormControl(''),
-      cantidad_devolucion: new FormControl(''),
+      cantidad_devolucion: new FormControl(0),
       activo: new FormControl(true),
     })
   }

@@ -147,17 +147,17 @@
               <!-- Weight Column -->
               <ng-container matColumnDef="cantidad">
                 <mat-header-cell *matHeaderCellDef> Cantidad a devolver </mat-header-cell>
-                <mat-cell *matCellDef="let element" data-label="cantidad a devolver">
+                <mat-cell *matCellDef="let element;let i = index" data-label="cantidad a devolver">
                   <!-- {{element?.cantidad}}  -->
                   <mat-form-field appearance="fill" class="campoeditor">
-                    <input matInput [value]="element?.cantidad">
+                    <input (keyup)="SaveCantidad(i,$event)" #cantidaddev  matInput [value]="element?.cantidad_devolucion" >
                   </mat-form-field>
                 </mat-cell>
               </ng-container>
               <!-- Symbol Column -->
               <ng-container matColumnDef="medida">
                 <mat-header-cell *matHeaderCellDef> Und. Medida </mat-header-cell>
-                <mat-cell *matCellDef="let element" data-label="medida"> {{element?.medida}} </mat-cell>
+                <mat-cell *matCellDef="let element" data-label="medida"> {{element?.medida }} </mat-cell>
               </ng-container>
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
