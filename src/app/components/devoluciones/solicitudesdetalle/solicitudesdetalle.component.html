@@ -38,11 +38,6 @@
               </div>
             </div>
             <br>
-            <div fxLayout="column" fxFlex="20" fxLayoutAlign="center center">
-              <button mat-button [disabled]="!validarComprobanteFormGroup.valid" (click)="validarComprobante()">Validar
-                <mat-icon>check</mat-icon>
-              </button>
-            </div>
             <div fxLayout="column" fxFlex="40" fxLayoutAlign="center center">
               <img src="assets/img/factura.png" width="185px" height="180px">
             </div>
@@ -50,7 +45,8 @@
           </div>
           <br>
           <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center end">
-            <button mat-button [disabled]="!resValidacion.Success" matStepperNext>Siguiente
+            <button mat-button [disabled]="!validarComprobanteFormGroup.valid" (click)="validarComprobante()">Validar y
+              cargar datos
               <mat-icon>navigate_next</mat-icon>
             </button>
           </div>
@@ -121,7 +117,8 @@
         <div class="example-table-container">
           <form>
 
-            <mat-table [dataSource]="SolicitudesFormGroup.value.items" fxLayout="column" fxFlexFill>
+            <mat-table [dataSource]="SolicitudesFormGroup.value.items" [trackBy]="trackByFn" fxLayout="column"
+              fxFlexFill>
 
 
               <ng-container matColumnDef="descripcion">
@@ -150,12 +147,13 @@
                 <mat-cell *matCellDef="let element;let i = index" data-label="cantidad a devolver">
                   <!-- {{element?.cantidad}}  -->
                   <mat-form-field appearance="fill" class="campoeditor">
-                    <input #cantidaddev (keyup)="SaveCantidad(i,cantidaddev.value)" [id]="i" matInput [value]="element?.cantidad_devolucion">
+                    <input #cantidaddev (keyup)="SaveCantidad(i,cantidaddev.value)" [id]="i" matInput
+                      [value]="element?.cantidad_devolucion">
 
                   </mat-form-field>
-                  <button mat-icon-button (click)="SaveCantidad(i,cantidaddev.value)">
+                  <!-- <button mat-icon-button (click)="SaveCantidad(i,cantidaddev.value)">
                     <mat-icon>done</mat-icon>
-                  </button>
+                  </button> -->
                 </mat-cell>
               </ng-container>
               <!-- Symbol Column -->
@@ -168,8 +166,8 @@
 
             </mat-table>
           </form>
-
-          {{SolicitudesFormGroup.value|json}}
+          <!--
+          {{SolicitudesFormGroup.value|json}} -->
         </div>
 
         <br>
@@ -177,7 +175,7 @@
           <button mat-button (click)="resetear()">
             <mat-icon>restart_alt</mat-icon>Resetear
           </button>
-          <button mat-button matStepperNext>Finalizar<mat-icon>navigate_next</mat-icon></button>
+          <button mat-button [disabled]="!SolicitudesFormGroup.valid" (click)="GuardarSolicitud()">Finalizar<mat-icon>navigate_next</mat-icon></button>
         </div>
       </mat-step>
       <mat-step>
