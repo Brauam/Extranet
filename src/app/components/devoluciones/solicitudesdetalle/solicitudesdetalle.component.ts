@@ -94,7 +94,8 @@ export class SolicitudesdetalleComponent implements OnInit {
               this.SolicitudesFormGroup.patchValue({
                 idcliente: result.idcliente,
                 idvendedor: result.idvendedor,
-                ordencompra: result.pedido
+                ordencompra: result.pedido,
+                numerooperacion : result.numerooperacion
               })
 
 
