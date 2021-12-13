@@ -153,7 +153,7 @@ export class SolicitudesdetalleComponent implements OnInit {
       nombresolicitante: new FormControl('',Validators.required),
       fechasolicitud: new FormControl(this.today),
       ordencompra: new FormControl('',Validators.required),
-      fechaordencompra: new FormControl('',Validators.required),
+      fechaordencompra: new FormControl(''),
       motivo: new FormControl('',Validators.required),
       fecha_registro: new FormControl(''),
       fecha_modificacion: new FormControl(''),
