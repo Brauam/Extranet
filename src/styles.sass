@@ -1,18 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
-::-webkit-scrollbar
-  width: 5px
+mat-table
+  width: 100%
 
-/* Track */
-::-webkit-scrollbar-track
-  box-shadow: inset 0 0 5px grey
-  border-radius: 10px
 
-/* Handle */
-::-webkit-scrollbar-thumb
-  /* background: red; */
-  border-radius: 10px
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover
-  background: #2d5394
+@media screen and (max-width: 960px)
+  .example-table-container
+    position: relative
+    min-height: 200px
+    max-height: 400px
+    overflow: auto
+
+  .mat-table .mat-header-cell
+    min-width: 100px
+    max-width: 150px
+    width: 100%
+
+  .campoeditor
+    width: 70px
+
+  .mat-cell
+    min-width: 100px
+    max-width: 150px

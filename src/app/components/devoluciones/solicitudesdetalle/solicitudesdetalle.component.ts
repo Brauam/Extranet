@@ -1,7 +1,7 @@
-import { ThrowStmt } from '@angular/compiler';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatHorizontalStepper } from '@angular/material/stepper';
+import { MatHorizontalStepper, MatStepper, MatVerticalStepper } from '@angular/material/stepper';
 import { ISolicitudes } from 'src/app/models/devoluciones/devoluciones';
 import { IComprobantes, IComprobantesDetalle, IMotivosNC } from 'src/app/models/intranet/comprobantes';
 import { IReturn } from 'src/app/services/common/return';
@@ -23,7 +23,7 @@ export class SolicitudesdetalleComponent implements OnInit {
   }
 
   @ViewChild('cantidaddev') cantidaddev: ElementRef;
-  @ViewChild('stepper') stepper: MatHorizontalStepper;
+  @ViewChild('stepper') stepper: MatStepper;
 
   today = new Date();
   comprobantes: IComprobantes;
@@ -37,14 +37,31 @@ export class SolicitudesdetalleComponent implements OnInit {
   rowIndex: number;
   cantidaddevolucion: number;
 
+  step1: boolean;
+  step2: boolean;
+  stepCon: boolean;
+  smallScreen: boolean;
+  isLinear: boolean;
+
   displayedColumns: string[] = ['descripcion', 'modelo', 'cantidadtotal', 'medida', 'cantidad'];
 
   constructor(private _formBuilder: FormBuilder,
     private comprobantesService: ComprobantesService,
-    private solictudesService: SolicitudesService) { }
+    private solictudesService: SolicitudesService,
+    private breakpointObserver: BreakpointObserver) {
+      breakpointObserver.observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small
+      ]).subscribe(result => {
+        this.smallScreen = result.matches;
+    });
+    }
 
   ngOnInit() {
-    console.log(this.today);
+    this.step1 = false
+    this.step2 = false
+    this.stepCon = true
+
     this.resValidacion = <IReturn>{};
     this.comprobantesService.SeriesComprobantes().subscribe(res => this.series = res)
     this.crearValidarComprobanteFormGroup();
@@ -53,19 +70,18 @@ export class SolicitudesdetalleComponent implements OnInit {
   }
 
 
-  resetear(){
+  resetear() {
     this.crearSolicitudesFormGroup();
     this.resValidacion = <IReturn>{};
     this.stepper.reset();
   }
 
-  GuardarSolicitud(){
-    let solicitud:ISolicitudes = this.SolicitudesFormGroup.getRawValue()
+  GuardarSolicitud() {
+    let solicitud: ISolicitudes = this.SolicitudesFormGroup.getRawValue()
     this.solictudesService.post(solicitud).subscribe(
       res => {
         if (res.Success) {
           this.stepper.next();
-          console.log(res.Message)
         } else {
           console.log('Esta mal wachin  ')
 
@@ -74,30 +90,27 @@ export class SolicitudesdetalleComponent implements OnInit {
     )
   }
 
+
   validarComprobante() {
+
     let serie = this.validarComprobanteFormGroup.controls.seriecomprobante.value;
     let numero = this.validarComprobanteFormGroup.controls.numerocomprobante.value;
-
     this.comprobantesService.ObtenerNumeroOperacion(serie, numero).subscribe(
       res => {
         this.resValidacion = res;
-        console.log(res)
         if (+res.Code != 0) {
-
 
           this.comprobantesService.get(+res.Code).subscribe(
             result => {
               this.comprobantes = result;
               this.comprobantesdetalle = result.items;
-              console.log(result);
 
               this.SolicitudesFormGroup.patchValue({
                 idcliente: result.idcliente,
                 idvendedor: result.idvendedor,
                 ordencompra: result.pedido,
-                numerooperacion : result.numerooperacion
+                numerooperacion: result.numerooperacion
               })
-
 
               this.comprobantesdetalle.forEach(element => {
                 this.crearSolicitudesDetalleFormGroup();
@@ -116,13 +129,15 @@ export class SolicitudesdetalleComponent implements OnInit {
                 detalle.push(this.SolicitudesdetalleFormGroup);
 
               });
-
             }
 
           )
+          this.stepper._steps
+          this.step1 = true;
+
           this.stepper.next();
+
         } else {
-          console.log(res.Message)
         }
       }
     )
@@ -130,11 +145,10 @@ export class SolicitudesdetalleComponent implements OnInit {
 
   trackByFn(index: any, item: any) {
     return index;
- }
+  }
 
   SaveCantidad(index: number, valor: any) {
     (this.SolicitudesFormGroup.controls.items as FormArray).at(index).patchValue({ cantidad_devolucion: +valor });
-    console.log((this.SolicitudesFormGroup.controls.items as FormArray).at(index).value);
   }
 
   crearValidarComprobanteFormGroup() {
@@ -150,15 +164,15 @@ export class SolicitudesdetalleComponent implements OnInit {
       idcliente: new FormControl(0),
       idvendedor: new FormControl(0),
       numerooperacion: new FormControl(''),
-      nombresolicitante: new FormControl('',Validators.required),
+      nombresolicitante: new FormControl('', Validators.required),
       fechasolicitud: new FormControl(this.today),
-      ordencompra: new FormControl('',Validators.required),
+      ordencompra: new FormControl('', Validators.required),
       fechaordencompra: new FormControl(''),
-      motivo: new FormControl('',Validators.required),
+      motivo: new FormControl('', Validators.required),
       fecha_registro: new FormControl(''),
       fecha_modificacion: new FormControl(''),
       activo: new FormControl(true),
-      idmotivo: new FormControl(1,Validators.required),
+      idmotivo: new FormControl(1, Validators.required),
       pendientepago: new FormControl(false),
       items: this._formBuilder.array([], Validators.required),
     })

@@ -9,6 +9,9 @@ export interface ISolicitudes {
   ordencompra: string;
   fechaordencompra: Date;
   motivo: string;
+  motivoNC: string;
+  comprobante: string;
+  guia: string;
   fecha_registro: Date;
   fecha_modificacion: Date;
   activo: boolean;

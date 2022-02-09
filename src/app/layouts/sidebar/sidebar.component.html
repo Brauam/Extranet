@@ -1,26 +1,26 @@
 <mat-nav-list>
-    <div class="profile-card">
-        <img src="/assets/img/logo_green.svg" alt="Logo de Empresa">        
-    </div>
+  <div class="profile-card">
+    <img src="/assets/img/logo_green.svg" alt="Logo de Empresa">
+  </div>
 
-    <mat-accordion>
-        <ng-container *ngFor="let item of model">
-            <mat-expansion-panel hideToggle (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title class="panel-tile">
-                        <mat-icon color="primary">{{item.icon}}</mat-icon>{{item.name}}
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <ng-container>
-                    <mat-selection-list #shoes [multiple]="false">
-                        <mat-list-option *ngFor="let it of item.children">
-                            <a [routerLink]="it.ruta">
-                                <mat-icon color="primary">{{it.icon}}</mat-icon>{{it.name}}
-                            </a>
-                        </mat-list-option>
-                    </mat-selection-list>
-                </ng-container>
-            </mat-expansion-panel>
+  <mat-accordion>
+    <ng-container *ngFor="let item of model">
+      <mat-expansion-panel hideToggle (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-tile">
+            <mat-icon>{{item.icon}}</mat-icon>{{item.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option [routerLink]="it.ruta" *ngFor="let it of item.children">
+              <span>
+                <mat-icon>{{it.icon}}</mat-icon>{{it.name}}
+              </span>
+            </mat-list-option>
+          </mat-selection-list>
         </ng-container>
-    </mat-accordion>
+      </mat-expansion-panel>
+    </ng-container>
+  </mat-accordion>
 </mat-nav-list>

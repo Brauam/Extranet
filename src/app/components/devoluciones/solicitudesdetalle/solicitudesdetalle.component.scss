@@ -1,11 +1,94 @@
 
+::ng-deep .mat-horizontal-stepper-header{
+  pointer-events: none !important;
+}
 
-mat-table {
-  width: 100%;
+::ng-deep .mat-vertical-stepper-header{
+  pointer-events: none !important;
+}
+
+.mat-column-descripcion {
+  Word-wrap: break-Word !important;
+  white-space: unset !important;
+  flex: 0 0 40% !important;
+  width: 40% !important;
+  overflow-wrap: break-Word;
+  Word-wrap: break-Word;
+
+  Word-break: break-Word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-modelo {
+  Word-wrap: break-Word !important;
+  white-space: unset !important;
+  flex: 0 0 20% !important;
+  width: 20% !important;
+  overflow-wrap: break-Word;
+  Word-wrap: break-Word;
+
+  Word-break: break-Word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-cantidadtotal {
+  Word-wrap: break-Word !important;
+  white-space: unset !important;
+  flex: 0 0 15% !important;
+  width: 15% !important;
+  overflow-wrap: break-Word;
+  Word-wrap: break-Word;
+
+  Word-break: break-Word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-medida {
+  Word-wrap: break-Word !important;
+  white-space: unset !important;
+  flex: 0 0 15% !important;
+  width: 15% !important;
+  overflow-wrap: break-Word;
+  Word-wrap: break-Word;
+
+  Word-break: break-Word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-cantidad {
+  Word-wrap: break-Word !important;
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+  overflow-wrap: break-Word;
+  Word-wrap: break-Word;
+
+  Word-break: break-Word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 .campoeditor {
-  width: 100px;
+  width: 50px;
 }
 
 .mat-row {
@@ -14,27 +97,6 @@ mat-table {
 
 .mat-cell {
   padding: 8px 8px 8px 0;
-}
-
-@media screen and (max-width: 960px) {
-  .example-table-container {
-    position: relative;
-    min-height: 200px;
-    max-height: 400px;
-    overflow: auto;
-  }
-  .mat-table .mat-header-cell {
-    min-width: 100px;
-    max-width: 150px;
-    width: 100%;
-  }
-  .campoeditor {
-    width: 70px;
-  }
-  .mat-cell {
-    min-width: 100px;
-    max-width: 150px;
-  }
 }
 
 
